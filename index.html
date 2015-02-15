@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Умножитель - B-схема</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+
+ <link href="css/myCss.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top" class="index">
+
+   
+
+    
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Умножитель</h2>
+                    <h3 class="section-subheading text-muted">на константу 3</h3>
+                </div>
+            </div>
+            <div class="row">
+               
+                <!-- <table class="table table-bordered" > -->
+                <table id = "lol" style="float:right" >
+                <!-- <table id = "lol"> -->
+               <!--  <table class="table-format" data-height="50"> -->
+                
+                <thead>
+              <tr>
+                <th>x/q</th>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">0</th>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;" /></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                
+              </tr>
+
+              <tr>
+                <th scope="row">1</th>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;" /></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                
+              </tr>
+
+              <tr>
+                <th scope="row">2</th>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;" /></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+               
+              </tr>
+
+              <tr>
+                <th scope="row">3</th>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;" /></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+                <td><input type="text" class="form-control input-sm"  style="width: 100px;"/></td>
+               
+              </tr>
+            </tbody>
+
+
+            </table>
+
+
+              
+            <button class="btn pull-right" type="submit">Готово</button>
+
+                     <canvas id="canvas" width="750" height="750"></canvas>
+
+    <script src="js/fabric.js"></script>
+    <script>
+        // var canvas = new fabric.StaticCanvas('canvas');
+        // var ctx = document.getElementById("canvas").getContext("2d");
+
+var base = 4;
+var n = 3;
+// var table = [];
+var table = [
+             ['x/q', 0,   1,   2],
+             [0,     0.0, 0.1, 0.2],
+             [1,     0.3, 1.0, 1.1],
+             [2,     1.2, 1.3, 2.0],
+             [3,     2.1, 2.2, 2.3],
+                            ];
+
+                            // console.log(table);
+
+// var tds = document.getElementsByTagName("td");//возвращает массив всех <td>
+// for (var i = 0; i < tds.length; i++) {
+//   console.log(tds[i]);
+// }
+
+// var cells = document.getElementsByTagName("td");
+// for(var i in cells){
+//     console.log("My contents is \"" + cells[i].innerHTML + "\"");
+// }
+
+  var button = document.querySelector("button");
+  button.addEventListener("click", function() {
+
+    var tableId = document.getElementById('lol'),
+    cells = tableId.getElementsByTagName('td');
+    var canvas = new fabric.StaticCanvas('canvas');
+    var ctx = document.getElementById("canvas").getContext("2d");
+    ctx.clearRect(0, 0,750,750);
+for (var i=0,len=cells.length; i<len; i++){
+
+        for(var k = 1; k < 5; k++){
+            for(var l = 1; l < 4; l++){
+                if(k==1){
+                  table[k][l] = cells[k*l-1].firstChild.value;  
+                }
+                if(k==2){
+                  table[k][l] = cells[k+l+1-1].firstChild.value;  
+                }
+                if(k==3){
+                  table[k][l] = cells[k+l+3-1].firstChild.value;  
+                }
+                if(k==4){
+                  table[k][l] = cells[k+l+5-1].firstChild.value;  
+                }
+                
+            }
+        }    
+       
+    
+        // console.log(cells[i].firstChild.value);
+    }
+  
+
+
+function getDecimal(num) { // после запятой
+
+  var temp = ( (num - Math.floor(num)).toFixed(1) )[2];
+  return 1 * temp;
+}
+
+function getFloor(num) { // целая часть
+  return Math.floor(num);
+}
+
+                            console.log(table[3][1]);
+                            console.log(getFloor(table[3][1]));
+                            console.log(getDecimal(table[3][1]));
+var space = 10;          // расстояние между линиями
+var xPoint = 100;        // начальная 'x' координата
+var inputLine = [];      // линии входа 
+var cLine = [];          // линии С
+var hLine = [];          // линии H
+var outputLine = [];     // линии выхода
+var upperOutLine = [];   // горизонтальные линии, идущие на выход
+var upperHLine = [];     // горизонтальные линии, идущие на H
+var underRectLine = [];  // линия под прямоугольниками, соединяющая C и H входы
+var lowerInLine = [];    // горизонтальные линии, идущие на вход
+// var state = 0;
+var inToOutLine = [];    // вертикальные линии, соединяющие вход и выход
+
+
+var rectangles = [];
+   for (var i = 0; i < n; i++){
+       rectangles[i] = [];
+       for (var j = 0; j < base; j++){
+           rectangles[i][j] = 0;
+   }}
+
+// рисуем линии входа
+for (var i = 0; i < base; i++){
+
+    
+    inputLine[i] = new fabric.Line([xPoint,100,xPoint,675],{stroke: 'gray', strokeWidth: 2});
+    canvas.add(inputLine[i]);
+
+    xPoint += space;
+}
+
+// сделаем двойной провел между линиями входа и линиями С
+xPoint += 10;
+// рисуем линии C
+for (var i = 0; i < n; i++){
+
+    
+    cLine[i] = new fabric.Line([xPoint,100,xPoint,675],{stroke: 'gray', strokeWidth: 2});
+    canvas.add(cLine[i]);
+    xPoint += space;
+}
+
+// оставим место для центральной части
+xPoint += 250;
+// рисуем линии H
+for (var i = 0; i < n; i++){
+
+    
+    hLine[i] = new fabric.Line([xPoint,100,xPoint,675],{stroke: 'gray', strokeWidth: 2});
+    canvas.add(hLine[i]);
+    xPoint += space;
+}
+
+// сделаем двойной провел между линиями H и линиями выхода
+xPoint += 10;
+// рисуем линии выхода
+for (var i = 0; i < base; i++){
+
+    
+    outputLine[i] = new fabric.Line([xPoint,100,xPoint,675],{stroke: 'gray', strokeWidth: 2});
+    canvas.add(outputLine[i]);
+    xPoint += space;
+}
+
+// сделаем двойной провел между линиями C и верхними горизонтальными линиями
+xPoint = (cLine[n-1]).x1 + 2*space;
+var yPoint = 120;
+
+
+function createBlock(state){
+
+var state = 0;
+var lastX = xPoint;
+var lastY = yPoint; // координаты последнего построенного объекта
+
+while(state < n) {
+
+  // верхние горизонтальные линии, идущие на выход
+  for (var i = 0; i < base; i++){
+
+    upperOutLine[i] = new fabric.Line([lastX,lastY,outputLine[i].x1,lastY],{stroke: 'gray', strokeWidth: 2});
+    //закрашенный квадрат в место соединения (переделать на пиксели! объект не нужен)
+    var rrr = new fabric.Rect({left: outputLine[i].x1 - 1.5,top: lastY - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+    canvas.add(upperOutLine[i],rrr);
+    lastY += space;
+  }
+
+    lastY += space;
+
+    // верхние горизонтальные линии, идущие на H
+  for (var i = 0; i < n; i++){
+    
+    upperHLine[i] = new fabric.Line([lastX,lastY,hLine[i].x1,lastY],{stroke: 'gray', strokeWidth: 2});
+    var rrr = new fabric.Rect({left: hLine[i].x1 - 1.5,top: lastY - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+    canvas.add(upperHLine[i],rrr);
+
+    lastY += space;
+    
+  }
+
+
+//создаем прямоугольники
+  var xb = upperHLine[2].x1;
+  var yb = upperHLine[2].y1 + space;
+
+  for (var i = 0; i < 4; i++){
+    
+     rectangles[i] = new fabric.Rect({left: xb,top: yb,width: 45,height: 25, fill:"rgb(255,255,255)",stroke: 'black', strokeWidth:2});
+     canvas.add(rectangles[i]);
+
+     var text = new fabric.Text('&'+state+','+i, { left: xb+3, top: yb+5,fontSize: 15, fontWeight:'bold' });
+     canvas.add(text);
+    
+     xb += 45;
+}
+
+// нижняя CH линия
+ lastY = yb + 25 + space;
+ underRectLine[1] = new fabric.Line([cLine[n-state-1].x1,lastY,hLine[n-state-1].x1,lastY],{stroke: 'gray', strokeWidth: 2});
+ var rrr = new fabric.Rect({left: cLine[n-state-1].x1 - 1.5,top: lastY - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+ var rrrr = new fabric.Rect({left: hLine[n-state-1].x1 - 1.5,top: lastY - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+     canvas.add(underRectLine[1],rrr,rrrr);
+
+
+     lastY += space;
+    
+
+    // нижние линии, идущие на вход
+for (var i = 3; i > -1; --i){
+
+    
+    lowerInLine[i] = new fabric.Line([inputLine[i].x1,lastY,hLine[0].x1-10,lastY],{stroke: 'gray', strokeWidth: 2});
+    var rrr = new fabric.Rect({left: inputLine[i].x1 - 1.5,top: lastY - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+    canvas.add(lowerInLine[i],rrr);
+    lastY += space;
+    
+}
+
+ //вертикальные линии, соединяющие вход и выход
+ var costil = 3;
+ for(var j = 0; j < base; j++){
+  
+var target = getDecimal(table[j+1][state+1]); // ячейка таблицы, соответствующая прямоугольнику
+
+var out =  getDecimal(target); 
+// console.log("out = " + out);
+// console.log("Вся инфа начало :");
+// console.log("rectangles[j].left :" + rectangles[j].left);nToOutLine[j] = new fabric.Line([re
+// console.log("lowerInLine[j].y1 :" + lowerInLine[j].y1);
+// console.log("rectangles[j].left :" + rectangles[j].left);
+// console.log("upperOutLine[target].y1 :" + upperOutLine[target].y1);
+// console.log("Вся инфа конец :");
+
+// inToOutLine[j] = new fabric.Line([rectangles[j].left+7,lowerInLine[j+costil].y1,rectangles[j].left+7,upperOutLine[Math.abs(target-3)].y1],{stroke: 'gray', strokeWidth: 2});
+
+// var rrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: lowerInLine[j+costil].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+
+// var rrrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: upperOutLine[Math.abs(target-3)].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+// canvas.add(inToOutLine[j],rrr,rrrr);
+
+
+
+
+inToOutLine[j] = new fabric.Line([rectangles[j].left+7,lowerInLine[j+costil].y1,rectangles[j].left+7,rectangles[j].top+rectangles[j].height],{stroke: 'gray', strokeWidth: 2});
+
+var t = new fabric.Line([rectangles[j].left+7,rectangles[j].top,rectangles[j].left+7,upperOutLine[Math.abs(target-3)].y1],{stroke: 'gray', strokeWidth: 2});
+
+var rrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: lowerInLine[j+costil].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+
+var rrrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: upperOutLine[Math.abs(target-3)].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+canvas.add(inToOutLine[j],rrr,t,rrrr);
+
+
+
+costil--;
+costil--;
+// Math.abs(target-3) т.к. первой верхней горизонтальной линии соотвествует 0 индекс , но значение не .// 0, а 3.
+}
+
+
+
+
+
+state++;
+
+lastY += 2*space;
+
+}
+
+
+
+}
+
+createBlock();
+
+// inToOutLine[0] = new fabric.Line([rectangles[0].left,lowerInLine[2].y1,rectangles[0].left,upperOutLine[2.y1],{stroke: 'gray', strokeWidth: 2});
+
+function standForText(ctx, inputLine, text) {
+
+  
+  var xBegin = inputLine[0].x1;
+  var xEnd = inputLine[inputLine.length - 1].x1;
+  var y = inputLine[0].y1 - 20;
+  ctx.beginPath();
+  ctx.moveTo(xBegin - 10, y + 5);
+  ctx.lineTo(xBegin, y);
+  ctx.lineTo(xEnd, y);
+  ctx.lineTo(xEnd + 10, y + 5);
+  ctx.stroke();
+
+  ctx.font='15px sans-serif';
+  ctx.strokeText(text, xBegin, y-15);
+
+}
+
+
+
+
+standForText(ctx,inputLine, 'вход');
+standForText(ctx,outputLine,'выход');
+standForText(ctx,cLine,'C');
+standForText(ctx,hLine,'H');
+
+for (var i = 0; i < base; i++){
+  var xx = inputLine[i].x1;
+  var yy = inputLine[i].y1;
+  ctx.font='italic 10px sans-serif';
+  ctx.strokeText(base-1-i, xx, yy-5);
+}
+
+for (var i = 0; i < base; i++){
+  var xx = outputLine[i].x1;
+  var yy = outputLine[i].y1;
+  ctx.font='italic 10px sans-serif';
+  ctx.strokeText(base-1-i, xx, yy-5);
+}
+
+for (var i = 0; i < n; i++){
+  var xx = cLine[i].x1;
+  var yy = cLine[i].y1;
+  ctx.font='italic 10px sans-serif';
+  ctx.strokeText(n-1-i, xx, yy-5);
+}
+
+for (var i = 0; i < n; i++){
+  var xx = hLine[i].x1;
+  var yy = hLine[i].y1;
+  ctx.font='italic 10px sans-serif';
+  ctx.strokeText(n-1-i, xx, yy-5);
+}
+
+});
+
+
+
+    </script>
+                
+            </div>
+        </div>
+    </section>
+
+  
+
+   
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                
+                    <span class="copyright">Copyright &copy; Мышев Павел, Хворостянников Сергей 2015</span>
+                
+             
+               
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

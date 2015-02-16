@@ -138,29 +138,29 @@ var table = [
     var canvas = new fabric.StaticCanvas('canvas');
     var ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0,750,750);
-for (var i=0,len=cells.length; i<len; i++){
+// for (var i=0,len=cells.length; i<len; i++){
 
-        for(var k = 1; k < 5; k++){
-            for(var l = 1; l < 4; l++){
-                if(k==1){
-                  table[k][l] = cells[k*l-1].firstChild.value;  
-                }
-                if(k==2){
-                  table[k][l] = cells[k+l+1-1].firstChild.value;  
-                }
-                if(k==3){
-                  table[k][l] = cells[k+l+3-1].firstChild.value;  
-                }
-                if(k==4){
-                  table[k][l] = cells[k+l+5-1].firstChild.value;  
-                }
+//         for(var k = 1; k < 5; k++){
+//             for(var l = 1; l < 4; l++){
+//                 if(k==1){
+//                   table[k][l] = cells[k*l-1].firstChild.value;  
+//                 }
+//                 if(k==2){
+//                   table[k][l] = cells[k+l+1-1].firstChild.value;  
+//                 }
+//                 if(k==3){
+//                   table[k][l] = cells[k+l+3-1].firstChild.value;  
+//                 }
+//                 if(k==4){
+//                   table[k][l] = cells[k+l+5-1].firstChild.value;  
+//                 }
                 
-            }
-        }    
+//             }
+//         }    
        
     
-        // console.log(cells[i].firstChild.value);
-    }
+//         // console.log(cells[i].firstChild.value);
+//     }
   
 
 
@@ -174,9 +174,7 @@ function getFloor(num) { // целая часть
   return Math.floor(num);
 }
 
-                            console.log(table[3][1]);
-                            console.log(getFloor(table[3][1]));
-                            console.log(getDecimal(table[3][1]));
+                       
 var space = 10;          // расстояние между линиями
 var xPoint = 100;        // начальная 'x' координата
 var inputLine = [];      // линии входа 
@@ -189,6 +187,7 @@ var underRectLine = [];  // линия под прямоугольниками, 
 var lowerInLine = [];    // горизонтальные линии, идущие на вход
 // var state = 0;
 var inToOutLine = [];    // вертикальные линии, соединяющие вход и выход
+var cToHLine = [];       // вертикальные линии, соединяющие C и H
 
 
 var rectangles = [];
@@ -321,7 +320,10 @@ for (var i = 3; i > -1; --i){
   
 var target = getDecimal(table[j+1][state+1]); // ячейка таблицы, соответствующая прямоугольнику
 
-var out =  getDecimal(target); 
+
+// console.log("getDecimal = " + getDecimal(table[j+1][state+1]));
+// console.log("getFloor = " + getFloor(table[j+1][state+1]));
+var target1 = getFloor(table[j+1][state+1]);
 // console.log("out = " + out);
 // console.log("Вся инфа начало :");
 // console.log("rectangles[j].left :" + rectangles[j].left);nToOutLine[j] = new fabric.Line([re
@@ -347,14 +349,33 @@ var t = new fabric.Line([rectangles[j].left+7,rectangles[j].top,rectangles[j].le
 var rrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: lowerInLine[j+costil].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
 
 var rrrr = new fabric.Rect({left: rectangles[j].left+7 - 1.5,top: upperOutLine[Math.abs(target-3)].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+
 canvas.add(inToOutLine[j],rrr,t,rrrr);
 
+ //вертикальные линии, соединяющие C и H
+cToHLine[j] = new fabric.Line([rectangles[j].left+rectangles[j].width-7,underRectLine[1].y1,rectangles[j].left+rectangles[j].width-7,rectangles[j].top+rectangles[j].height],{stroke: 'gray', strokeWidth: 2});
+
+
+var tt = new fabric.Line([rectangles[j].left+rectangles[j].width-7,rectangles[j].top,rectangles[j].left+rectangles[j].width-7,upperHLine[Math.abs(target1-2)].y1],{stroke: 'gray', strokeWidth: 2});
+
+var p = new fabric.Rect({left: rectangles[j].left+rectangles[j].width-7 - 1.5,top: underRectLine[1].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+
+var pp = new fabric.Rect({left: rectangles[j].left+rectangles[j].width-7 - 1.5,top: upperHLine[Math.abs(target1-2)].y1 - 1.5,width: 3,height: 3, fill:"rgb(0,0,0)",stroke: 'black', strokeWidth:2});
+
+
+canvas.add(cToHLine[j],p,tt,pp);
 
 
 costil--;
 costil--;
 // Math.abs(target-3) т.к. первой верхней горизонтальной линии соотвествует 0 индекс , но значение не .// 0, а 3.
+
+
+
+
+
 }
+
 
 
 

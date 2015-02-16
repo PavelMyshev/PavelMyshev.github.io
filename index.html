@@ -138,29 +138,29 @@ var table = [
     var canvas = new fabric.StaticCanvas('canvas');
     var ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0,750,750);
-// for (var i=0,len=cells.length; i<len; i++){
+for (var i=0,len=cells.length; i<len; i++){
 
-//         for(var k = 1; k < 5; k++){
-//             for(var l = 1; l < 4; l++){
-//                 if(k==1){
-//                   table[k][l] = cells[k*l-1].firstChild.value;  
-//                 }
-//                 if(k==2){
-//                   table[k][l] = cells[k+l+1-1].firstChild.value;  
-//                 }
-//                 if(k==3){
-//                   table[k][l] = cells[k+l+3-1].firstChild.value;  
-//                 }
-//                 if(k==4){
-//                   table[k][l] = cells[k+l+5-1].firstChild.value;  
-//                 }
+        for(var k = 1; k < 5; k++){
+            for(var l = 1; l < 4; l++){
+                if(k==1){
+                  table[k][l] = cells[k*l-1].firstChild.value;  
+                }
+                if(k==2){
+                  table[k][l] = cells[k+l+1-1].firstChild.value;  
+                }
+                if(k==3){
+                  table[k][l] = cells[k+l+3-1].firstChild.value;  
+                }
+                if(k==4){
+                  table[k][l] = cells[k+l+5-1].firstChild.value;  
+                }
                 
-//             }
-//         }    
+            }
+        }    
        
     
-//         // console.log(cells[i].firstChild.value);
-//     }
+        // console.log(cells[i].firstChild.value);
+    }
   
 
 
